@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "635555457587",
+    "firebase_url": "https://dash-on-fire.firebaseio.com",
+    "project_id": "dash-on-fire",
+    "storage_bucket": "dash-on-fire.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635555457587:android:a2f57603d8bdaf6c8a9146",
+        "android_client_info": {
+          "package_name": "com.gdgistanbul.dashonfire"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635555457587-bc0kdate5c4v42i9iookqag3i5ulmrru.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeOveqnpH-CQYLJ_WB89qgCCZWDzJd6J0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635555457587-bc0kdate5c4v42i9iookqag3i5ulmrru.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "635555457587-ldndb2l1skk5tagnd6jvhm59f5olaa71.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.gdgistanbul.dashonfire"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
