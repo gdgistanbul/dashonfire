@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "635555457587-piihnenr8be6pv5hr72id7jnuj7node0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdgistanbul.dashonfire",
+            "certificate_hash": "2b4353f53aa3fce258b2b55444e35e6596e594ce"
+          }
+        },
+        {
           "client_id": "635555457587-bc0kdate5c4v42i9iookqag3i5ulmrru.apps.googleusercontent.com",
           "client_type": 3
         }

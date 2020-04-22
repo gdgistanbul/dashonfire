@@ -28,6 +28,10 @@ dependencies:
   google_sign_in: ^4.4.1
   fluro: ^1.6.3
   flutter_splash: ^1.0.0
+  provider: ^4.0.5
+  get_it: ^4.0.1
+
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
