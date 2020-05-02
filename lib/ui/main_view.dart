@@ -1,8 +1,5 @@
-import 'package:dash_on_fire/ui/chat_view.dart';
 import 'package:dash_on_fire/viewmodels/login_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
 class MainView extends StatefulWidget {
@@ -11,8 +8,6 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
- 
-
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<LoginProvider>(context);
@@ -21,8 +16,11 @@ class _MainViewState extends State<MainView> {
           child: Center(
       child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-      Image.asset('assets/logo.png'),
+            children: <Widget>[        
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Image.asset('assets/logo.png'),
+      ),
       SizedBox(height:20),
       MaterialButton(
         minWidth: MediaQuery.of(context).size.width - 48,

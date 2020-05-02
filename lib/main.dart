@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dash on Fire',
       theme: ThemeData(
+
         primarySwatch: Colors.red,
       ),
       initialRoute: "splash",

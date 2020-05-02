@@ -6,8 +6,6 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'locator.dart';
-
 class FluroRouter {
   static Router router = new Router();
   static Handler _mainHandler = Handler(

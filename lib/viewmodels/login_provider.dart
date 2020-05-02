@@ -1,4 +1,5 @@
-import 'package:dash_on_fire/ui/auth_service.dart';
+import 'package:dash_on_fire/services/auth_service.dart';
+import 'package:dash_on_fire/services/firestore_service.dart';
 import 'package:dash_on_fire/ui/chat_view.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +7,7 @@ import '../locator.dart';
 
 class LoginProvider extends ChangeNotifier {
   final Auth authenticationService = locator<Auth>();
+  final DataBase databaseService = locator<DataBase>();
   int count = 12;
   
 
