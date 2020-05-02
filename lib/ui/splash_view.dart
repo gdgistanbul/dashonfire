@@ -1,12 +1,16 @@
+import 'package:dash_on_fire/viewmodels/login_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_splash/flutter_splash.dart';
+import 'package:provider/provider.dart';
 
 class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<LoginProvider>(context);
     return new Splash(
         seconds: 14,
-        navigateAfterSeconds: "main",
+        navigateAfterFuture: provider.isUserExist(),
+        navigateAfterSeconds: provider.hasUser?"chat":"main",
         title: new Text('Dash On Fire'),
         image: new Image.asset('assets/logo.png'),
         backgroundColor: Colors.white,

@@ -26,4 +26,16 @@ class Auth {
     }
     return user;
   }
+
+  Future<FirebaseUser> getCuurrentUser()async{
+    _user = await _auth.currentUser();
+    return _user;
+  }
+
+  void signOut()async{
+    await FirebaseAuth.instance.signOut();
+    await _googleSignIn.disconnect();
+    await _googleSignIn.signOut();
+    print(_googleSignIn.currentUser);
+  }
 }
