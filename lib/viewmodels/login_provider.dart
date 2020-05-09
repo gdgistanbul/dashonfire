@@ -5,15 +5,16 @@ import 'package:flutter/material.dart';
 import '../locator.dart';
 
 class LoginProvider extends ChangeNotifier {
+
   final Auth authenticationService = locator<Auth>();
   final DataBase databaseService = locator<DataBase>();
   int count = 12;
-  bool hasUser = false;
+  bool hasUser;
 
   void onLoginPressed(BuildContext context) async {
     await authenticationService.loginWithGoogle();
     Navigator.pushNamedAndRemoveUntil(
-        context, "chat", (Route<dynamic> route) => false);
+        context, "streams", (Route<dynamic> route) => false);
   }
 
   String getUser() {
@@ -25,8 +26,22 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  isUserExist() async{
-    hasUser =  authenticationService.getCuurrentUser() != null;
+  String route;
+  Future<String> handleStartUpLogic() async {
+    var hasLoggedInUser = await authenticationService.isUserLoggedIn();
+//    Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+//    final SharedPreferences prefs = await _prefs;
+//    var hasUser = prefs.getBool("hasUser") ?? false;
+    hasUser = hasLoggedInUser;
     notifyListeners();
+    route = "main";
+
+    if (hasLoggedInUser) {
+      route = "streams";
+    } else {
+      route = "main";
+    }
+
+    return await new Future<String>.delayed(Duration(seconds: 3), () => route);
   }
 }

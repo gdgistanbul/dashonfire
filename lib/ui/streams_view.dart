@@ -13,9 +13,11 @@ class StreamsView extends StatelessWidget {
           appBar: AppBar(
             automaticallyImplyLeading: true,
             actions: [
-              IconButton(onPressed: () {
-                model.signOut(context);
-              }, icon: Icon(Icons.exit_to_app))
+              IconButton(
+                  onPressed: () {
+                    model.signOut(context);
+                  },
+                  icon: Icon(Icons.exit_to_app))
             ],
           ),
           body: FutureBuilder<List<Streams>>(
@@ -30,8 +32,8 @@ class StreamsView extends StatelessWidget {
                       return StreamListItem(
                         name: snapshot.data[index].name,
                         url: snapshot.data[index].url,
-                        onTap: (){
-                          
+                        onTap: () {
+                          Navigator.pushNamed(context, "chat");
                         },
                       );
                     },

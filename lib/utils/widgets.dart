@@ -1,11 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class StreamListItem extends StatelessWidget {
   final String url;
   final String name;
+  final DocumentReference owner;
   final GestureTapCallback onTap;
 
-  const StreamListItem({Key key, this.url, this.name, this.onTap}) : super(key: key);
+  const StreamListItem({Key key, this.url, this.name, this.onTap, this.owner}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,8 @@ class StreamListItem extends StatelessWidget {
           ),
           Center(
             child: Text(name),
+          ),Center(
+            child: Text(""),
           )
         ],
       ),

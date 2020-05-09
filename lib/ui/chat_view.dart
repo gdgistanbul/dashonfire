@@ -1,21 +1,113 @@
+import 'package:dash_on_fire/model/messagEntity.dart';
 import 'package:dash_on_fire/model/stream_model.dart';
 import 'package:dash_on_fire/utils/widgets.dart';
-import 'package:dash_on_fire/viewmodels/streams_provider.dart';
+import 'package:dash_on_fire/viewmodels/chat_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ChatView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<StreamsProvider>(
+    return Consumer<ChatProvider>(
       builder: (_, model, child) {
         return Scaffold(
-          appBar: AppBar(
-            automaticallyImplyLeading: true,
-          ),
-          body: Container()
-        );
+            appBar: AppBar(
+              automaticallyImplyLeading: true,
+            ),
+            body: SafeArea(
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: model.messageWithuser == null
+                            ? Container(
+                                height: 50,
+                                width: 50,
+                                child:
+                                    Center(child: CircularProgressIndicator()))
+                            : ListView.separated(
+                                separatorBuilder: (context, index) {
+                                  return Divider();
+                                },
+                                itemCount: model.messageWithuser.length,
+                                itemBuilder: (context, index) {
+                                  return MessageItem(
+                                      message: model.messageWithuser[index],
+                                      index: index);
+                                },
+                              ),
+                      ),
+                      Container(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: TextField(
+                                  controller: model.controller,
+                                ),
+                              ),
+                              SizedBox(width: 16),
+                              Icon(
+                                Icons.send,
+                                size: 24,
+                                color: Colors.red,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ));
       },
+    );
+  }
+}
+
+String takeUserLetters(String name) {
+  var names = name.split(" ");
+  names.map((name) => name[0]);
+  return names.toString();
+}
+
+class MessageItem extends StatelessWidget {
+  final MessageWithUser message;
+  final int index;
+  const MessageItem({
+    Key key,
+    this.message,
+    this.index,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 50,
+      width: 100,
+      color: Colors.white,
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: Colors.primaries[index % Colors.primaries.length],
+          child: Center(child: Text(takeUserLetters(message.user.name))),
+        ),
+        title: Text(message.user.name,
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        subtitle: Text(message.message.message),
+        trailing: Row(
+          children: [
+            Icon(Icons.thumb_up, size: 24, color: Colors.red),
+            Text(message.message.likedUsers.length.toString())
+          ],
+        ),
+      ),
     );
   }
 }

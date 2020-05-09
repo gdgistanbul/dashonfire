@@ -9,8 +9,8 @@ class SplashView extends StatelessWidget {
     var provider = Provider.of<LoginProvider>(context);
     return new Splash(
         seconds: 14,
-        navigateAfterFuture: provider.isUserExist(),
-        navigateAfterSeconds: provider.hasUser?"chat":"main",
+        navigateAfterFuture: provider.handleStartUpLogic(),
+        navigateAfterSeconds: provider.route,
         title: new Text('Dash On Fire'),
         image: new Image.asset('assets/logo.png'),
         backgroundColor: Colors.white,
