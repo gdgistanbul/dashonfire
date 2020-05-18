@@ -13,6 +13,22 @@ class ChatView extends StatelessWidget {
         return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: true,
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    model.isSortingByLike = !model.isSortingByLike;
+                    model.isSortingByLike? model.sortByLike(): model.sortByDate();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(
+                      model.isSortingByLike? Icons.favorite: Icons.favorite_border,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ),
+                )
+              ],
             ),
             body: SafeArea(
               child: Stack(
@@ -30,13 +46,17 @@ class ChatView extends StatelessWidget {
                                 child:
                                     Center(child: CircularProgressIndicator()))
                             : ListView.separated(
+                                itemCount: model.messageWithuser.length,
                                 separatorBuilder: (context, index) {
                                   return Divider();
                                 },
-                                itemCount: model.messageWithuser.length,
                                 itemBuilder: (context, index) {
                                   return MessageItem(
                                       message: model.messageWithuser[index],
+                                      onTap: () {
+                                        model.addLike(
+                                            model.messageWithuser[index]);
+                                      },
                                       index: index);
                                 },
                               ),
@@ -53,10 +73,15 @@ class ChatView extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: 16),
-                              Icon(
-                                Icons.send,
-                                size: 24,
-                                color: Colors.red,
+                              GestureDetector(
+                                onTap: () {
+                                  model.addMessage();
+                                },
+                                child: Icon(
+                                  Icons.send,
+                                  size: 24,
+                                  color: Colors.red,
+                                ),
                               )
                             ],
                           ),
@@ -74,24 +99,25 @@ class ChatView extends StatelessWidget {
 
 String takeUserLetters(String name) {
   var names = name.split(" ");
-  names.map((name) => name[0]);
-  return names.toString();
+  StringBuffer buffer = new StringBuffer();
+  names.forEach((name) => buffer.write(name[0]));
+  return buffer.toString();
 }
 
 class MessageItem extends StatelessWidget {
   final MessageWithUser message;
   final int index;
+  final GestureTapCallback onTap;
   const MessageItem({
     Key key,
     this.message,
     this.index,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      width: 100,
       color: Colors.white,
       child: ListTile(
         leading: CircleAvatar(
@@ -101,11 +127,18 @@ class MessageItem extends StatelessWidget {
         title: Text(message.user.name,
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         subtitle: Text(message.message.message),
-        trailing: Row(
-          children: [
-            Icon(Icons.thumb_up, size: 24, color: Colors.red),
-            Text(message.message.likedUsers.length.toString())
-          ],
+        trailing: Container(
+          height: 50,
+          width: 50,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              GestureDetector(
+                  onTap: onTap,
+                  child: Icon(Icons.thumb_up, size: 24, color: Colors.red)),
+              Text(message.message.likedUsers.length.toString())
+            ],
+          ),
         ),
       ),
     );

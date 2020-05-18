@@ -18,6 +18,8 @@ class DataBase {
   final StreamController<List<Message>> messagesController =
       StreamController<List<Message>>.broadcast();
 
+  DocumentSnapshot lastMesage;
+
   Future<List<Streams>> getStreams() async {
     var doc = await streamsCollectionReference.getDocuments();
 
@@ -31,16 +33,48 @@ class DataBase {
     await usersCollectionReference.document(user.uid).setData(user.toJson());
   }
 
-  Stream listenMessages() {
-    messagesCollectionReference.snapshots().listen((messageSnapshot) {
-      if (messageSnapshot.documents.isNotEmpty) {
-        var messages = messageSnapshot.documents
-            .map((message) => Message.fromMap(message.data, message.documentID))
-            .toList();
+  Future addMessage(Message message) async {
+    await messagesCollectionReference.document().setData(message.toJson());
+  }
 
-        messagesController.add(messages);
-      }
-    });
+
+  Future updateMessage(Message message) async {
+    try{
+    await messagesCollectionReference.document(message.uid).updateData(message.toJson());
+    }catch (e){
+      print(e.toString());
+    }
+  }
+
+  Stream listenMessages() {
+    // if (lastMesage != null) {
+    //   messagesCollectionReference
+    //       .orderBy("date")
+    //       .startAfterDocument(lastMesage)
+    //       .snapshots()
+    //       .listen((messageSnapshot) {
+    //     if (messageSnapshot.documents.isNotEmpty) {
+    //       lastMesage = messageSnapshot.documents.last;
+    //       var messages = messageSnapshot.documents
+    //           .map((message) =>
+    //               Message.fromMap(message.data, message.documentID))
+    //           .toList();
+
+    //       messagesController.add(messages);
+    //     }
+    //   });
+    // } else {
+      messagesCollectionReference.orderBy("date", descending:false).snapshots().listen((messageSnapshot) {
+        if (messageSnapshot.documents.isNotEmpty) {
+          var messages = messageSnapshot.documents
+              .map((message) =>
+                  Message.fromMap(message.data, message.documentID))
+              .toList();
+
+          messagesController.add(messages);
+        }
+      });
+    // }
     return messagesController.stream;
   }
 }
